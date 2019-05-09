@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import '../styles/Button.scss';
 
 const Button = props => {
-  return <span onClick={() => props.click(props.label)}>{props.label || 'btn'}</span>;
+  const classes = ['btn']
+
+  if (props.orange) classes.push('orange');
+  return <div className={classes.join(' ')} onClick={() => props.click(props.label)}>{props.label || 'btn'}</div>;
 };
 
 Button.propTypes = {
