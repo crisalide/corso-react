@@ -5,7 +5,7 @@ import '../styles/App.scss';
 
 
 import {PLUS, MINUS, MULTI, DIVIDE, EQUAL, DOT} from '../config/const';
-import {sum, subtract, multiply, divide, includes} from 'lodash';
+import { includes, sum, subtract, multiply, divide } from 'lodash';
 
 class App extends Component {
   constructor() {
@@ -17,6 +17,9 @@ class App extends Component {
     //contenitore per il primo e il secondo operando 
     this.operators = [];
 
+    // contenitore per i bottoni
+    this.labels = ['7', '8', '9', DIVIDE, '4', '5', '6', MULTI, '1', '2', '3', MINUS, '0', DOT, EQUAL, PLUS,];
+
     this.state = {
       display: '',
       operation: '',
@@ -27,7 +30,7 @@ class App extends Component {
 
   updateDigits(digit) {
     console.log('digit', digit);
-    
+
     // se il primo numero digitato è 0 e il secondo non è una virgola allora cancella lo 0
     if (this.digits.length >= 1 && this.digits[0] === '0' && this.digits[1] !== DOT) {
       this.digits.shift();
@@ -113,25 +116,11 @@ doComputation() {
         <h1>Calcolatrice REACT</h1>
         <div id='calculator'>
           <Display value={this.state.display} />
-          <Button label="7" click={this.handleClick} />
-          <Button label="8" click={this.handleClick} />
-          <Button label="9" click={this.handleClick} />
-          <Button label={MULTI} click={this.handleClick} orange />
-
-          <Button label="4" click={this.handleClick} />
-          <Button label="5" click={this.handleClick} />
-          <Button label="6" click={this.handleClick} />
-          <Button label={DIVIDE} click={this.handleClick} orange />
-
-          <Button label="1" click={this.handleClick} />
-          <Button label="2" click={this.handleClick} />
-          <Button label="3" click={this.handleClick} />
-          <Button label={MINUS}click={this.handleClick} orange />
-
-          <Button label="0" click={this.handleClick} />
-          <Button label={DOT} click={this.handleClick} />
-          <Button label={EQUAL} click={this.handleClick} />
-          <Button label={PLUS} click={this.handleClick} orange />
+          {
+            this.labels.map((label, index) => 
+            (<Button key={'btn-' + index} label={label} click={this.handleClick} />))
+          }
+          
         </div>
       </div>
     );
