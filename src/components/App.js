@@ -5,7 +5,7 @@ import '../styles/App.scss';
 
 
 import {PLUS, MINUS, MULTI, DIVIDE, EQUAL, DOT} from '../config/const';
-import {includes} from 'lodash';
+import {sum, subtract, multiply, divide, includes} from 'lodash';
 
 class App extends Component {
   constructor() {
@@ -27,6 +27,16 @@ class App extends Component {
 
   updateDigits(digit) {
     console.log('digit', digit);
+    
+    // se il primo numero digitato è 0 e il secondo non è una virgola allora cancella lo 0
+    if (this.digits.length >= 1 && this.digits[0] === '0' && this.digits[1] !== DOT) {
+      this.digits.shift();
+    };
+
+    // se premo la virgola come primo digit mostra anche lo 0
+    if (this.digits.length === 0 && digit === DOT) this.digits.push ('0');
+
+    // definisce la virgola
     if (digit !== DOT || (digit === DOT && !includes(this.digits, digit) )) {
       this.digits.push(digit);
       this.setState ({ display: this.digits.join('') });
@@ -55,16 +65,16 @@ doComputation() {
   let result = '';
   switch (this.state.operation) {
     case PLUS:
-    result = this.operators[0] + this.operators [1];
+    result = sum(this.operators);
     break;
     case MINUS:
-    result = this.operators[0] - this.operators [1];
+    result = subtract(this.operators[0], this.operators [1]);
     break;
     case MULTI:
-    result = this.operators[0] * this.operators [1];
+    result = multiply(this.operators[0], this.operators [1]);
     break;
     case DIVIDE:
-    result = this.operators[0] / this.operators [1];
+    result = divide(this.operators[0], this.operators [1]);
     break;
   }
 
